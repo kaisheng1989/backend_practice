@@ -16,7 +16,25 @@ const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
 
+// Importing the router and Controller - D34
+// it is capitalise here because it is a class. - This apply to the require portion.
+// Example of Setting up router and controller Line
+/*__________________________________________________________________ */
+
+const UserController = require("./Controllers/UserController");
+const UserRouter = require("./Routers/UserRouter");
+
+/*__________________________________________________________________ */
+// Note below is carmel case.
+const userController = new UserController();
+
+// Below is passed in as a dependency
+const userRouter = new UserRouter(userController, express);
+
+/*__________________________________________________________________ */
+
 // Step 7: Create ausers object to see the get request for /users
+/*
 const users = [
   {
     name: "John",
@@ -27,6 +45,7 @@ const users = [
     student: "slacker",
   },
 ];
+*/
 
 // Together with step 12 (middleware) - Look at Step 11
 // application level middle ware - All request will got through these
@@ -37,6 +56,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // setting up next()
 //route level middleware/route handlers
+/*__________________________________________________________________ */
+
 app.get("/", (req, res, next) => {
   console.log(req);
   next();
@@ -48,6 +69,7 @@ app.post("/users", (req, res, next) => {
 });
 
 // step 6: after filling in index.js get up a get request.
+// Testing route to verify if the app run.
 app.get("/", (request, response) => {
   // console.log('request',request)
   // console.log('response', response)
@@ -58,6 +80,15 @@ app.get("/", (request, response) => {
   //
 });
 
+/*__________________________________________________________________ */
+// Setting up router and controller. D34
+/*__________________________________________________________________ */
+// Forming the prefix for all route coming from user router.  .route because user route return route.
+app.use("/users", userRouter.route());
+
+/*__________________________________________________________________ */
+/*
+// Users Routes - Can collate to a single route sheet for users
 app.get("/users", (req, res) => {
   res.json({ users: users });
 });
@@ -84,6 +115,12 @@ app.get("/usernames", (req, res) => {
   let names = users.map((user) => user.name);
   res.json({ data: names, message: "Success" });
 });
+*/
+/*__________________________________________________________________ */
+// Error handling route.
+app.get("*", (req, res) => {
+  res.send("Error");
+});
 
 // To get the response: http://localhost:8080/users
 app.listen(PORT, () => {
@@ -94,3 +131,6 @@ app.listen(PORT, () => {
 
 // step 8: installing .env.
 // npm install dotenv
+
+// router is like a path.
+// controller is the fucntion of what to do.
