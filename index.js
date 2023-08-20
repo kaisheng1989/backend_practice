@@ -29,10 +29,23 @@ const users = [
 ];
 
 // Together with step 12 (middleware) - Look at Step 11
+// application level middle ware - All request will got through these
 app.use(cors());
 // Step 13: from step 11
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// setting up next()
+//route level middleware/route handlers
+app.get("/", (req, res, next) => {
+  console.log(req);
+  next();
+});
+
+app.post("/users", (req, res, next) => {
+  console.log(req.body);
+  next();
+});
 
 // step 6: after filling in index.js get up a get request.
 app.get("/", (request, response) => {
@@ -58,6 +71,19 @@ app.post("/users", (req, res) => {
 
 // step 11: Add a middleware - there will be two
 //npm install cors
+
+// Step 13 : getting the a single user
+app.get("/users/:name", (req, res) => {
+  let user = users.filter((x) => x.name === req.params.name);
+  console.log(user);
+  res.json({ message: "success", data: user });
+});
+
+//Step 14:  Getting just the user name
+app.get("/usernames", (req, res) => {
+  let names = users.map((user) => user.name);
+  res.json({ data: names, message: "Success" });
+});
 
 // To get the response: http://localhost:8080/users
 app.listen(PORT, () => {
