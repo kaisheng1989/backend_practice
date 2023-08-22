@@ -16,6 +16,15 @@ const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT;
 
+// TO include model
+const db= require('./db/models/index')
+// Destructuring of the db
+const {students, student_addresses}=db
+
+
+
+
+
 // Importing the router and Controller - D34
 // it is capitalise here because it is a class. - This apply to the require portion.
 // Example of Setting up router and controller Line
@@ -26,7 +35,8 @@ const UserRouter = require("./Routers/UserRouter");
 
 /*__________________________________________________________________ */
 // Note below is carmel case.
-const userController = new UserController();
+// TO use mode include into new constroller
+const userController = new UserController(students, student_addresses);
 
 // Below is passed in as a dependency
 const userRouter = new UserRouter(userController, express);
