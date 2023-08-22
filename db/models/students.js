@@ -5,6 +5,7 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Students extends Model {}
+ //Students.hasMany('students_addresses')
   Students.init(
     {
       id: {

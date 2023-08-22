@@ -3,9 +3,10 @@
 // there should be a reference. since addresses have a reference to student id.
 "use strict";
 
-const { Model } = require("sequelize");
+const { Model, BelongsTo } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Students_Addresses extends Model {}
+  //Students_Addresses.belongsTo('students')
   Students_Addresses.init(
     {
       id: {

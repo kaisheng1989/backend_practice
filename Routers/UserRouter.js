@@ -10,6 +10,8 @@ class UserRouter {
     router.get("/:name", this.controller.listOne);
     router.post("/", this.controller.add);
     router.get("/usernames", this.controller.listNames);
+    // adding a delete
+    router.delete("/:id", this.controller.delete)
 
     return router;
   };
